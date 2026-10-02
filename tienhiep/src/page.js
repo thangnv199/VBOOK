@@ -1,16 +1,12 @@
 load("common.js");
 function execute(url) {
     try {
-        var base = url.split("?")[0].split("#")[0].replace(/\/$/, "");
-        var doc = readDocument(base, "main a[href*=/chapters/]");
-        var options = doc.select("select option");
+        var info = bookInfo(url);
         var pages = [];
-        for (var i = 0; i < options.size(); i++) {
-            var option = options.get(i);
-            if (/^Chương\s+\d+/.test(option.text())) {
-                pages.push(base + "?chaptersPage=" + encodeURIComponent(option.attr("value")));
-            }
+        for (var i = 0; i < Math.ceil(info.count / 100); i++) {
+            pages.push(info.url + "?chaptersPage=" + i + "&vbookId=" + encodeURIComponent(info.id));
         }
-        return Response.success(pages.length ? pages : [base]);
+        if (!pages.length) return Response.error("Truyện chưa có chương.");
+        return Response.success(pages);
     } catch (e) { return Response.error(String(e)); }
 }
