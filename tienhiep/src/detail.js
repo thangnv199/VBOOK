@@ -2,16 +2,15 @@ load("common.js");
 function execute(url) {
     try {
         var doc = readDocument(url, "main h1");
-        var heading = doc.select("main h1").first();
-        var info = heading.parent();
+        var status = doc.select("main h1 ~ div > span").text();
         return Response.success({
-            name: heading.text(),
+            name: doc.select("main h1").text(),
             cover: absoluteUrl(doc.select("main img").attr("src")),
             host: BASE_URL,
-            author: info.select("p span").text(),
-            description: info.select("p").last().text(),
-            detail: info.select("div").first().text(),
-            ongoing: info.text().indexOf("Hoàn thành") === -1
+            author: doc.select("main h1 + p span").text(),
+            description: doc.select("meta[name=description]").attr("content"),
+            detail: status,
+            ongoing: status.indexOf("Đang ra") >= 0
         });
     } catch (e) { return Response.error(String(e)); }
 }

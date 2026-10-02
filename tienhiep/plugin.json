@@ -2,12 +2,13 @@
   "metadata": {
     "name": "Tiên Hiệp Lâu",
     "author": "Nguyễn Văn Thắng",
-    "version": 1,
+    "version": 2,
     "source": "https://tienhiep.vercel.app",
     "regexp": "https://tienhiep\\.vercel\\.app/books/[^/?#]+/?(?:\\?[^#]*)?$",
     "description": "Đọc truyện trên Tiên Hiệp Lâu",
     "locale": "vi_VN",
-    "type": "novel"
+    "type": "novel",
+    "language": "javascript"
   },
   "script": {
     "home": "home.js",
